@@ -827,12 +827,17 @@
                 return;
             }
 
+            const formData = new URLSearchParams();
+            Object.entries(payload).forEach(([key, value]) => {
+                formData.append(key, Array.isArray(value) ? value.join(' | ') : String(value));
+            });
+
             fetch(SCRIPT_URL, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
                 },
-                body: JSON.stringify(payload),
+                body: formData.toString(),
             })
                 .then((response) => response.json())
                 .then((data) => {
