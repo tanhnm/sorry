@@ -292,6 +292,24 @@
             cursor: pointer;
         }
 
+        .custom-promise-input {
+            width: 100%;
+            margin-top: 8px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 1px solid #f1f5f9;
+            font-size: 14px;
+            color: #475569;
+            background: #f8fafc;
+            transition: border-color 0.25s ease;
+        }
+
+        .custom-promise-input:focus {
+            outline: none;
+            border-color: #ff3b68;
+            background: #ffffff;
+        }
+
         /* Action Buttons Area */
         .buttons-container {
             position: relative;
@@ -526,20 +544,21 @@
                 <!-- Interactive Promises -->
                 <div class="promise-box">
                     <div class="promise-title">
-                        <span>📜 Cam Kết Ngoan Dĩnh:</span>
+                        <span>📜 Yêu cầu của eiu chọn:</span>
                     </div>
                     <label class="promise-item">
                         <input type="checkbox" onchange="togglePromise(this)" />
-                        <span>1. Sẽ không tái phạm nữa 😇</span>
+                        <span>1. Cho a hun 10000 cái 😇</span>
                     </label>
                     <label class="promise-item">
                         <input type="checkbox" onchange="togglePromise(this)" />
-                        <span>2. Bao ăn món yêu thích / trà sữa 🧋</span>
+                        <span>2. Choa a cắn một cáiiiii 🧋</span>
                     </label>
                     <label class="promise-item">
-                        <input type="checkbox" onchange="togglePromise(this)" />
-                        <span>3. Nghe lời và luôn lắng nghe 💖</span>
+                        <input type="checkbox" id="promiseCustomCheckbox" onchange="togglePromise(this)" />
+                        <span>3. Eiu choa a cái gì cũng được 💖</span>
                     </label>
+                    <input type="text" id="customPromiseText" class="custom-promise-input" placeholder="Nhập yêu cầu đặc biệt..." maxlength="80" />
                 </div>
             </div>
 
@@ -609,6 +628,11 @@
         const angerPercentage = document.getElementById("angerPercentage");
         const angerBarFill = document.getElementById("angerBarFill");
         const mainEmoji = document.getElementById("mainEmoji");
+        const promiseCheckboxes = document.querySelectorAll('.promise-box input[type="checkbox"]');
+        const customPromiseText = document.getElementById("customPromiseText");
+
+        // Replace this URL with your deployed Google Apps Script Web App URL.
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9QjW4PDdEBi54xYN1vXPvAP9vxKcnVVZkOpRNTy2jEPFGtwnGagsZVTzWBuiSm7Kx/exec";
 
         let angerValue = 90;
         let scaleFactor = 1.0;
@@ -735,7 +759,7 @@
         // Event listeners for mobile touch & desktop hover
         noButton.addEventListener("mouseover", moveNoButton);
         noButton.addEventListener("touchstart", moveNoButton);
-        noButton.addEventListener("click", moveNoButton);
+        noButton.addEventListener("click", handleNoButtonClick);
 
         // Promise Checkboxes interaction
         function togglePromise(checkbox) {
@@ -771,8 +795,63 @@
             }
         }
 
+        function getSelectedPromises() {
+            return Array.from(promiseCheckboxes)
+                .filter((checkbox) => checkbox.checked)
+                .map((checkbox) => {
+                    const label = checkbox.closest('label');
+                    if (checkbox.id === 'promiseCustomCheckbox') {
+                        const customText = customPromiseText.value.trim();
+                        return customText ? `3. ${customText}` : "3. Eiu choa a cái gì cũng được 💖";
+                    }
+                    return label ? label.innerText.trim() : "Chưa chọn";
+                });
+        }
+
+        function buildResponsePayload(decision) {
+            return {
+                timestamp: new Date().toISOString(),
+                recipientName: recipientInput.value.trim() || "Ngân",
+                decision,
+                angerValue,
+                selectedPromises: getSelectedPromises(),
+                customPromise: customPromiseText.value.trim() || "",
+                pageUrl: window.location.href,
+            };
+        }
+
+        function sendResponseToSheet(decision) {
+            const payload = buildResponsePayload(decision);
+            if (SCRIPT_URL.includes("REPLACE_WITH_YOUR_DEPLOYED_URL")) {
+                console.warn("Google Apps Script URL not configured. Replace SCRIPT_URL with your deployed web app URL.");
+                return;
+            }
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Response saved to Google Sheet:", data);
+                })
+                .catch((error) => {
+                    console.error("Unable to send response to Google Sheet:", error);
+                });
+        }
+
+        function handleNoButtonClick(event) {
+            event.preventDefault();
+            sendResponseToSheet("Không tha");
+            moveNoButton(event);
+        }
+
         // Accept Apology Action
         function acceptApology() {
+            sendResponseToSheet("Tha lỗi");
             document.getElementById("apologyPage").style.display = "none";
             document.getElementById("successPage").style.display = "block";
             createHeartRain();
