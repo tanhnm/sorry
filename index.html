@@ -632,7 +632,7 @@
         const customPromiseText = document.getElementById("customPromiseText");
 
         // Replace this URL with your deployed Google Apps Script Web App URL.
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxyeFf5xcM8eAAJRLr6muJ1NHvp0rKCa7cGxGEERKIANY5SF0hbakyzFvavcRZAI-x6/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0hDFqX71V1OJApFodDt02L0ayEZ3zWQDzda5pwTvQJlVPMhqNUfUxMCX8kk4fpvjk/exec";
 
         let angerValue = 90;
         let scaleFactor = 1.0;
@@ -834,14 +834,11 @@
 
             fetch(SCRIPT_URL, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-                },
+                mode: "no-cors",
                 body: formData.toString(),
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log("Response saved to Google Sheet:", data);
+                .then(() => {
+                    console.log("Request sent to Google Sheet endpoint.");
                 })
                 .catch((error) => {
                     console.error("Unable to send response to Google Sheet:", error);

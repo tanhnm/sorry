@@ -20,7 +20,7 @@ function parsePayload(e) {
 function doPost(e) {
   try {
     const payload = parsePayload(e);
-    const spreadsheetId = 'REPLACE_WITH_YOUR_SPREADSHEET_ID';
+    const spreadsheetId = '1LPZ6KKibSS7TdwqUWi7SQmoUVAVYnB7_Jg4p1Cw56a4';
     const sheetName = 'Responses';
 
     const ss = SpreadsheetApp.openById(spreadsheetId);
