@@ -10,11 +10,25 @@ function parsePayload(e) {
   if (e.parameter && Object.keys(e.parameter).length > 0) {
     return e.parameter;
   }
-  try {
-    return JSON.parse(e.postData.contents || '{}');
-  } catch (error) {
-    return {};
+
+  const raw = e.postData && e.postData.contents ? e.postData.contents : '';
+  if (raw) {
+    // Try JSON first, then fallback to URL-encoded form body.
+    try {
+      return JSON.parse(raw);
+    } catch (error) {
+      const parsed = {};
+      raw.split('&').forEach((pair) => {
+        const [key, value] = pair.split('=');
+        if (key) {
+          parsed[decodeURIComponent(key)] = decodeURIComponent(value || '');
+        }
+      });
+      return parsed;
+    }
   }
+
+  return {};
 }
 
 function doPost(e) {
