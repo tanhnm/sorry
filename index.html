@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xin Lỗi Chân Thành 🥺❤️</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a1c4fd 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            top: 15px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 6px 12px;
+            border-radius: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link.active {
+            background: #ff5e7e;
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 94, 126, 0.3);
+        }
+
+        .nav-link:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+
+        /* Main Card Container */
+        .card {
+            width: 100%;
+            max-width: 520px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 40px 28px 30px 28px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(255, 94, 126, 0.2), 0 10px 20px rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            margin-top: 60px;
+            position: relative;
+            animation: appear 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.92);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Animated Emoji */
+        .emoji-box {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .emoji {
+            font-size: 75px;
+            animation: pulse-shake 2s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes pulse-shake {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            20% {
+                transform: scale(1.08) rotate(-6deg);
+            }
+
+            40% {
+                transform: scale(1.08) rotate(6deg);
+            }
+
+            60% {
+                transform: scale(1) rotate(-3deg);
+            }
+
+            80% {
+                transform: scale(1) rotate(3deg);
+            }
+        }
+
+        /* Editable Recipient Name */
+        .recipient-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            background: rgba(255, 94, 126, 0.08);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px dashed rgba(255, 94, 126, 0.4);
+        }
+
+        .recipient-input {
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 26px;
+            font-weight: 800;
+            color: #ff3b68;
+            text-align: center;
+            width: 170px;
+            outline: none;
+            border-bottom: 2px solid transparent;
+            transition: border 0.3s ease;
+        }
+
+        .recipient-input:focus {
+            border-bottom-color: #ff3b68;
+        }
+
+        .edit-icon {
+            font-size: 14px;
+            color: #ff5e7e;
+            opacity: 0.7;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Forgiveness Progress Bar */
+        .anger-meter-box {
+            background: rgba(241, 245, 249, 0.9);
+            border-radius: 18px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .anger-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .anger-bar-bg {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .anger-bar-fill {
+            height: 100%;
+            width: 90%;
+            background: linear-gradient(90deg, #ff4757, #ff6b81);
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Apology Message Card */
+        .message-card {
+            background: linear-gradient(180deg, #fff5f7 0%, #ffffff 100%);
+            border: 1.5px solid #ffe1e8;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 22px;
+            color: #334155;
+            line-height: 1.7;
+            font-size: 15px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(255, 94, 126, 0.05);
+        }
+
+        .message-card p {
+            margin-bottom: 12px;
+        }
+
+        .message-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Interactive Promise List */
+        .promise-box {
+            text-align: left;
+            margin-top: 15px;
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 12px 15px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .promise-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ff3b68;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .promise-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13.5px;
+            color: #475569;
+            margin-bottom: 8px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s ease;
+        }
+
+        .promise-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .promise-item:hover {
+            transform: translateX(4px);
+        }
+
+        .promise-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #ff3b68;
+            cursor: pointer;
+        }
+
+        /* Action Buttons Area */
+        .buttons-container {
+            position: relative;
+            min-height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        button {
+            border: none;
+            border-radius: 16px;
+            padding: 16px 28px;
+            font-size: 16px;
+            font-weight: 800;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            touch-action: manipulation;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+            z-index: 2;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 14px 30px rgba(16, 185, 129, 0.45);
+        }
+
+        .btn-yes:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+            z-index: 999;
+            white-space: nowrap;
+            width: auto;
+            transition: left 0.35s ease, top 0.35s ease, transform 0.35s ease, opacity 0.35s ease;
+        }
+
+        /* Success Screen */
+        .success-screen {
+            display: none;
+            animation: appear 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .certificate-card {
+            background: linear-gradient(135deg, #fff9fa 0%, #fff0f3 100%);
+            border: 2px dashed #ff9a9e;
+            border-radius: 24px;
+            padding: 24px 18px;
+            margin: 18px 0;
+            box-shadow: inset 0 0 20px rgba(255, 154, 158, 0.1);
+        }
+
+        .certificate-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #e11d48;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .certificate-body {
+            font-size: 15px;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .certificate-stamp {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 6px 18px;
+            background: #ffe4e6;
+            color: #e11d48;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 13px;
+            border: 1px solid #fecdd3;
+        }
+
+        .action-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-secondary {
+            background: rgba(241, 245, 249, 0.9);
+            color: #475569;
+            font-size: 14px;
+            padding: 12px 20px;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatParticle 3s linear forwards;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg) scale(0.8);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-280px) rotate(360deg) scale(1.2);
+            }
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: 20px;
+            font-size: 12.5px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* Mobile responsiveness adjustments */
+        @media (max-width: 480px) {
+            .nav-bar {
+                top: 10px;
+            }
+
+            .card {
+                padding: 30px 18px 24px 18px;
+                border-radius: 26px;
+                margin-top: 55px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .recipient-input {
+                font-size: 22px;
+                width: 140px;
+            }
+
+            .emoji {
+                font-size: 65px;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            button {
+                width: 100%;
+                padding: 15px 20px;
+            }
+
+            .btn-no {
+                width: auto !important;
+                max-width: calc(100vw - 30px) !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Main Card Container -->
+    <main class="card">
+
+        <!-- Request / Apology Screen -->
+        <section id="apologyPage">
+
+            <div class="emoji-box">
+                <span class="emoji" id="mainEmoji">🥺</span>
+            </div>
+
+            <div class="recipient-container" title="Bấm vào để đổi tên người nhận">
+                <input disabled type="text" id="recipientName" class="recipient-input" value="Ngân" maxlength="20"
+                    placeholder="Nhập tên..." />
+            </div>
+
+            <h1>Cho tớ xin lỗi nhé... ❤️</h1>
+
+            <p class="subtitle">
+                Tớ biết là tớ đã làm bạn buồn rồi... Cho tớ gửi lời xin lỗi chân thành nhất!
+            </p>
+
+            <!-- Forgiveness Meter -->
+            <div class="anger-meter-box">
+                <div class="anger-label">
+                    <span>Mức độ giận dữ:</span>
+                    <span id="angerPercentage">90% 😡</span>
+                </div>
+                <div class="anger-bar-bg">
+                    <div class="anger-bar-fill" id="angerBarFill" style="width: 90%;"></div>
+                </div>
+            </div>
+
+            <!-- Detailed Message Box -->
+            <div class="message-card">
+                <p>
+                    Chào <strong class="recipient-display">Ngân</strong> 👋,
+                </p>
+                <p>
+                    Tớ thật sự hối hận vì những gì đã xảy ra. Tớ không cố ý làm bạn buồn hay bực mình đâu 😭.
+                </p>
+                <p>
+                    Mong bạn rộng lượng tha lỗi cho tớ lần này. Tớ hứa sẽ chú ý và không để chuyện tương tự lặp lại nữa!
+                    🙏✨
+                </p>
+
+                <!-- Interactive Promises -->
+                <div class="promise-box">
+                    <div class="promise-title">
+                        <span>📜 Cam Kết Ngoan Dĩnh:</span>
+                    </div>
+                    <label class="promise-item">
+                        <input type="checkbox" onchange="togglePromise(this)" />
+                        <span>1. Sẽ không tái phạm nữa 😇</span>
+                    </label>
+                    <label class="promise-item">
+                        <input type="checkbox" onchange="togglePromise(this)" />
+                        <span>2. Bao ăn món yêu thích / trà sữa 🧋</span>
+                    </label>
+                    <label class="promise-item">
+                        <input type="checkbox" onchange="togglePromise(this)" />
+                        <span>3. Nghe lời và luôn lắng nghe 💖</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="buttons-container" id="buttonsWrapper">
+                <button class="btn-yes" id="yesButton" onclick="acceptApology()">
+                    💚 Tha Lỗi Cho Tớ
+                </button>
+
+                <button class="btn-no" id="noButton">
+                    💔 Hông Tha
+                </button>
+            </div>
+
+            <p class="footer-note">
+                * Nút "Tha Lỗi" luôn sẵn sàng để mang lại nụ cười cho bạn 😊
+            </p>
+
+        </section>
+
+        <!-- Success / Forgiveness Screen -->
+        <section class="success-screen" id="successPage">
+
+            <div class="emoji-box">
+                <span class="emoji">🥰</span>
+            </div>
+
+            <h1 style="color: #ff3b68;">BẠN ĐÃ THA LỖI! 🎉</h1>
+
+            <p class="subtitle">
+                Cảm ơn <strong class="recipient-display" style="color: #ff3b68;">Ngân</strong> vì đã siêu bao dung và
+                dễ thương! ❤️
+            </p>
+
+            <div class="certificate-card">
+                <div class="certificate-title">📜 GIẤY CHỨNG NHẬN THA LỖI 📜</div>
+                <div class="certificate-body">
+                    Hôm nay, ngày <strong id="currentDate">--/--/----</strong>,<br>
+                    <strong class="recipient-display" style="color: #ff3b68;">Ngân</strong> đã chính thức tha
+                    lỗi!<br><br>
+                    Mọi chuyện buồn đã được xóa bỏ 100%. Từ giờ chỉ toàn niềm vui và yêu thương thôi nha! ✨
+                </div>
+                <div class="certificate-stamp">
+                    ✅ ĐÃ KÝ DUYỆT VỚI 100% YÊU THƯƠNG
+                </div>
+            </div>
+
+            <div class="action-group">
+                <button class="btn-yes" onclick="copyThankYouMessage()">
+                    📋 Copy Lời Cảm Ơn Để Gửi Zalo / Messenger
+                </button>
+                <button class="btn-secondary" onclick="location.reload()">
+                    🔄 Xem lại lời xin lỗi
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // DOM Elements
+        const noButton = document.getElementById("noButton");
+        const yesButton = document.getElementById("yesButton");
+        const recipientInput = document.getElementById("recipientName");
+        const recipientDisplays = document.querySelectorAll(".recipient-display");
+        const angerPercentage = document.getElementById("angerPercentage");
+        const angerBarFill = document.getElementById("angerBarFill");
+        const mainEmoji = document.getElementById("mainEmoji");
+
+        let angerValue = 90;
+        let scaleFactor = 1.0;
+
+        // Synchronize Recipient Name Input
+        recipientInput.addEventListener("input", (e) => {
+            const val = e.target.value.trim() || "Người Ấy";
+            recipientDisplays.forEach(el => el.innerText = val);
+        });
+
+        // Set Today's Date in Certificate
+        const today = new Date();
+        document.getElementById("currentDate").innerText = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+
+        // Humorous Begging Messages for Runaway Button
+        const beggingMessages = [
+            "Mắc gì giận hoài vậy? 🥺",
+            "Biết lỗi thật rồi mà 😭",
+            "Cho xin lỗi đi mừ 🙏",
+            "Tớ hư lắm đúng hông? 💔",
+            "Mua trà sữa đền nè! 🧋",
+            "Năn nỉ năn nỉ năn nỉ~ 🥺",
+            "Đừng ấn nút này nữa 😭",
+            "Nút bên kia đẹp hơn kìa! 👉💚",
+            "Tha lỗi cho người ta đi 🌸",
+            "Hứa sẽ luôn ngoan dĩnh 😇"
+        ];
+
+        const sadEmojis = ["🥺", "😭", "😿", "💔", "🙏", "🥹"];
+        let msgIndex = 0;
+        let isMoving = false;
+
+        // Runaway Button Logic with Viewport Safety Bounds
+        function moveNoButton(e) {
+            if (e) e.preventDefault();
+            if (isMoving) return;
+
+            // If all begging messages have been shown, hide the button smoothly
+            if (msgIndex >= beggingMessages.length) {
+                noButton.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+                noButton.style.opacity = "0";
+                noButton.style.transform = "scale(0.3)";
+                setTimeout(() => {
+                    noButton.style.display = "none";
+                }, 400);
+                return;
+            }
+
+            isMoving = true;
+
+            // Smoothly initialize fixed position from current layout box to prevent jump to (0,0) on laptop
+            if (noButton.style.position !== "fixed") {
+                const currentRect = noButton.getBoundingClientRect();
+                noButton.style.transition = "none";
+                noButton.style.position = "fixed";
+                noButton.style.left = `${currentRect.left}px`;
+                noButton.style.top = `${currentRect.top}px`;
+                noButton.offsetHeight; // force reflow
+                noButton.style.transition = "left 0.35s ease, top 0.35s ease, transform 0.35s ease, opacity 0.35s ease";
+            }
+
+            // 1. Update text and emoji first
+            noButton.innerText = beggingMessages[msgIndex];
+            msgIndex++;
+            mainEmoji.innerText = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+
+            // 2. Enforce fixed position & auto width
+            noButton.style.width = "auto";
+            noButton.style.maxWidth = "calc(100vw - 30px)";
+
+            // 3. Accurate bounding box measurement
+            const rect = noButton.getBoundingClientRect();
+            const btnWidth = rect.width || 140;
+            const btnHeight = rect.height || 50;
+
+            // 4. Calculate smart safe bounds (bounded around card on laptop displays)
+            const padding = 20;
+            let minX = padding;
+            let maxX = Math.max(padding, window.innerWidth - btnWidth - padding);
+            let minY = padding;
+            let maxY = Math.max(padding, window.innerHeight - btnHeight - padding);
+
+            const card = document.querySelector('.card');
+            if (card && window.innerWidth > 650) {
+                const cardRect = card.getBoundingClientRect();
+                const margin = 100;
+                minX = Math.max(padding, Math.floor(cardRect.left - margin));
+                maxX = Math.min(Math.floor(window.innerWidth - btnWidth - padding), Math.floor(cardRect.right + margin - btnWidth));
+                minY = Math.max(padding, Math.floor(cardRect.top - margin));
+                maxY = Math.min(Math.floor(window.innerHeight - btnHeight - padding), Math.floor(cardRect.bottom + margin - btnHeight));
+            }
+
+            const rangeX = Math.max(0, maxX - minX);
+            const rangeY = Math.max(0, maxY - minY);
+
+            const newX = Math.floor(minX + Math.random() * rangeX);
+            const newY = Math.floor(minY + Math.random() * rangeY);
+
+            noButton.style.left = `${newX}px`;
+            noButton.style.top = `${newY}px`;
+
+            // Disable pointer-events temporarily while animating
+            noButton.style.pointerEvents = "none";
+
+            // Reduce Anger Level slightly when dodging!
+            decreaseAnger(5);
+
+            // Make the Yes button grow bigger & more appealing!
+            if (scaleFactor < 1.6) {
+                scaleFactor += 0.08;
+                yesButton.style.transform = `scale(${scaleFactor})`;
+            }
+
+            // Spawn floating sad/pleading heart
+            createFloatingParticle(newX + btnWidth / 2, newY, "🥺");
+
+            // Re-enable mouse hover after movement animation finishes (350ms cooldown)
+            setTimeout(() => {
+                noButton.style.pointerEvents = "auto";
+                isMoving = false;
+            }, 350);
+        }
+
+        // Event listeners for mobile touch & desktop hover
+        noButton.addEventListener("mouseover", moveNoButton);
+        noButton.addEventListener("touchstart", moveNoButton);
+        noButton.addEventListener("click", moveNoButton);
+
+        // Promise Checkboxes interaction
+        function togglePromise(checkbox) {
+            if (checkbox.checked) {
+                decreaseAnger(15);
+                createFloatingParticle(window.innerWidth / 2, window.innerHeight / 2, "✨");
+            } else {
+                increaseAnger(10);
+            }
+        }
+
+        function decreaseAnger(amount) {
+            angerValue = Math.max(0, angerValue - amount);
+            updateAngerMeter();
+        }
+
+        function increaseAnger(amount) {
+            angerValue = Math.min(100, angerValue + amount);
+            updateAngerMeter();
+        }
+
+        function updateAngerMeter() {
+            angerBarFill.style.width = `${angerValue}%`;
+            if (angerValue > 60) {
+                angerPercentage.innerText = `${angerValue}% 😡`;
+                angerBarFill.style.background = "linear-gradient(90deg, #ff4757, #ff6b81)";
+            } else if (angerValue > 20) {
+                angerPercentage.innerText = `${angerValue}% 🥺`;
+                angerBarFill.style.background = "linear-gradient(90deg, #ffa502, #ff7f50)";
+            } else {
+                angerPercentage.innerText = `${angerValue}% 🥰`;
+                angerBarFill.style.background = "linear-gradient(90deg, #2ed573, #10b981)";
+            }
+        }
+
+        // Accept Apology Action
+        function acceptApology() {
+            document.getElementById("apologyPage").style.display = "none";
+            document.getElementById("successPage").style.display = "block";
+            createHeartRain();
+        }
+
+        // Heart & Flower Rain Effect
+        function createHeartRain() {
+            const icons = ["💖", "❤️", "🥰", "🌸", "🌷", "✨", "💕", "🧋", "🎉"];
+            for (let i = 0; i < 45; i++) {
+                setTimeout(() => {
+                    const icon = icons[Math.floor(Math.random() * icons.length)];
+                    const startX = Math.random() * window.innerWidth;
+                    createFloatingParticle(startX, window.innerHeight + 20, icon);
+                }, i * 65);
+            }
+        }
+
+        function createFloatingParticle(x, y, char) {
+            const particle = document.createElement("div");
+            particle.className = "particle";
+            particle.innerText = char;
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.fontSize = `${20 + Math.random() * 25}px`;
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 3000);
+        }
+
+        // Copy Thank You Message to Clipboard
+        function copyThankYouMessage() {
+            const name = recipientInput.value.trim() || "Ngân";
+            const text = `Cảm ơn ${name} đã tha lỗi cho tớ nha! 🥰❤️ Tớ hứa từ nay sẽ ngoan dĩnh và không làm ${name} buồn nữa đâu ✨🧋`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Đã copy lời cảm ơn siêu dễ thương! Bạn có thể dán (paste) vào Zalo / Messenger để gửi rồi nha 💌");
+            }).catch(() => {
+                alert(text);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
